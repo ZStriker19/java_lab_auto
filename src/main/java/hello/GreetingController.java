@@ -81,10 +81,10 @@ public class GreetingController {
         }
         Thread.sleep(50L);
         System.out.println("Right before multiply");
-        // multiplyBy12((float) 23.3);
+        multiplyBy12((float) 23.3);
 
 
-        //  doSomeOtherStuff(doSomeStuff("\n how about this but really"));
+        doSomeOtherStuff(doSomeStuff("\n how about this but really"));
 
 
         //Post to downsteam service using OKhttp specifically
@@ -126,7 +126,7 @@ public class GreetingController {
         return helloStr;
     }
 
-
+    @Trace(operationName = "job.exec", resourceName = "MyJob.process")
     public void doSomeOtherStuff (String somestring) throws InterruptedException {
         Tracer tracer = GlobalTracer.get();
         try (Scope scope = tracer.buildSpan("doSomeOtherStuff").startActive(true)) {
