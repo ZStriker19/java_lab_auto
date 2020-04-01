@@ -1,7 +1,21 @@
 package hello;
 
 
+
+
+import datadog.trace.api.Trace;
+import io.opentracing.Scope;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
+import io.opentracing.util.GlobalTracer;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import org.aopalliance.intercept.Invocation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,14 +23,36 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+
+
+import java.nio.charset.StandardCharsets;
+
+//import datadog.trace.api.DDTags;
+
+////Users/zach.groves/projects/my_sandboxes/java_apm_lab/lab1/SpringTest0/src/main/java/hello/GreetingController.java
+//import io.opentracing.Scope;
+//import io.opentracing.Tracer;
+//import io.opentracing.util.GlobalTracer;
+//import io.opentracing.propagation.Format;
+//import io.opentracing.propagation.TextMap;
+
+//import io.opentracing.util.GlobalTracer;
+//because you need datadog.trace.api.DDTags in order to create a custom span with a custom service name you need to
+//specify dd-trace-ot as a dependency
+
+import java.io.IOException;
+
+
 
 
 @RestController
 public class GreetingController {
-
 
     @Autowired
     private RestTemplate restTemplate;
@@ -24,43 +60,90 @@ public class GreetingController {
     @Autowired
     HttpServletRequest request;
 
+    private static final Logger logger = LoggerFactory.getLogger(GreetingController.class);
+
+    @Value("#{environment['sleeptime'] ?: '2000'}")
+    private long sleepTime;
+
 
     @RequestMapping("/ServiceC")
-    public String serviceC() throws InterruptedException {
+    public String serviceC(HttpServletRequest request) throws InterruptedException, IOException {
+        //my map I'm creating for testing my own code:
+        Map<String, String> map_test_z = new HashMap<>();
 
-        // Hashmap containing Header key/val
-        Map<String, String> map = new HashMap<>();
+        Enumeration headerNames = request.getHeaderNames();
 
-        //build HttpHeader
-        HttpHeaders header = new HttpHeaders();
-        header.setAll(map);
+        while (headerNames.hasMoreElements()) {
+            String key = (String) headerNames.nextElement();
+            String value = request.getHeader(key);
+            System.out.print(key + "\n" + value + "\n");
+            map_test_z.put(key, value);
+        }
+        Thread.sleep(50L);
+        System.out.println("Right before multiply");
+        // multiplyBy12((float) 23.3);
 
-        //Sleep
-        Thread.sleep(250L);
 
-        //Post to downstream service
-        String rs = restTemplate.postForEntity("http://localhost:9393/ServiceD", new HttpEntity(header), String.class).getBody();
+        //  doSomeOtherStuff(doSomeStuff("\n how about this but really"));
+
+
+        //Post to downsteam service using OKhttp specifically
+        OkHttpClient client = new OkHttpClient();
+        Request req = new Request.Builder()
+                .url("http://localhost:9393/ServiceD")
+                .addHeader("this is a header", "here it is")
+                .build();
+
+        Response response = client.newCall(req).execute();
+
+        String rs = response.body().string();
+
+//Post to downstream service original
+        //put headers into HttpEntity object for them to be sent over
+        //HttpEntity<String> entity = new HttpEntity<>("body");
+        // String rs = restTemplate.postForEntity("http://localhost:9393/ServiceD", entity, String.class).getBody();
 
         return rs;
     }
 
 
-    @RequestMapping("/ServiceD")
-    public String serviceD() throws InterruptedException {
+    @RequestMapping("/ServiceX")
+    public String serviceX(HttpServletRequest request) throws InterruptedException, IOException {
 
-        Enumeration<String> e = request.getHeaderNames();
-        Map<String, String> spanMap = new HashMap<>();
 
-        while (e.hasMoreElements()) {
-            // add the names of the request headers into the spanMap
-            String key = e.nextElement();
-            String value = request.getHeader(key);
-            spanMap.put(key, value);
+        HttpEntity<String> entity = new HttpEntity<>("body");
+        String rs = restTemplate.postForEntity("http://localhost:9393/ServiceY", entity, String.class).getBody();
+
+        return rs;
+    }
+
+
+
+    @Trace(operationName = "job.exec", resourceName = "MyJob.process")
+    public String doSomeStuff (String somestring) throws InterruptedException {
+        String helloStr = String.format("Hello, %s!", somestring);
+        Thread.sleep(200L);
+        return helloStr;
+    }
+
+
+    public void doSomeOtherStuff (String somestring) throws InterruptedException {
+        Tracer tracer = GlobalTracer.get();
+        try (Scope scope = tracer.buildSpan("doSomeOtherStuff").startActive(true)) {
+            scope.span().setTag("Service", "doSomeOtherStuffService");
+            Thread.sleep(1000);
         }
+        System.out.println(somestring);
+        Thread.sleep(200L);
+    }
 
-        Thread.sleep(230L);
-
-        return "Service D\n";
+    @Trace(operationName = "multiply.twelve", resourceName = "ToTry.process")
+    private float multiplyBy12 (Float num) throws InterruptedException {
+        num = num * 12;
+        System.out.print("here's the number:");
+        System.out.print(num);
+        Thread.sleep(250L);
+        return num;
     }
 
 
