@@ -71,6 +71,9 @@ public class GreetingController {
         //my map I'm creating for testing my own code:
         Map<String, String> map_test_z = new HashMap<>();
 
+        Randomizer rando = new Randomizer();
+        rando.randomize();
+
         Enumeration headerNames = request.getHeaderNames();
 
         while (headerNames.hasMoreElements()) {
