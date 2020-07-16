@@ -7001,3 +7001,13 @@ Caused by: java.lang.ClassNotFoundException: jdk.jfr.Event
 [dd.trace 2020-07-16 11:05:36:008 -0700] [dd-jmx-collector] DEBUG org.datadog.jmxfetch.App - Done trying to recover broken instances.
 [dd.trace 2020-07-16 11:05:36:008 -0700] [dd-jmx-collector] DEBUG org.datadog.jmxfetch.App - Iteration ran in 0 ms
 [dd.trace 2020-07-16 11:05:36:008 -0700] [dd-jmx-collector] DEBUG org.datadog.jmxfetch.App - Sleeping for 15000 ms.
+[dd.trace 2020-07-16 11:05:51:010 -0700] [dd-jmx-collector] DEBUG org.datadog.jmxfetch.reporter.Reporter - Instance dd-java-agent default is sending 26 metrics to the metrics reporter during collection #583
+[dd.trace 2020-07-16 11:05:51:010 -0700] [dd-jmx-collector] DEBUG org.datadog.jmxfetch.App - Trying to recover broken instances...
+[dd.trace 2020-07-16 11:05:51:010 -0700] [dd-jmx-collector] DEBUG org.datadog.jmxfetch.App - Done trying to recover broken instances.
+[dd.trace 2020-07-16 11:05:51:010 -0700] [dd-jmx-collector] DEBUG org.datadog.jmxfetch.App - Iteration ran in 1 ms
+[dd.trace 2020-07-16 11:05:51:010 -0700] [dd-jmx-collector] DEBUG org.datadog.jmxfetch.App - Sleeping for 15000 ms.
+[dd.trace 2020-07-16 11:06:06:011 -0700] [dd-jmx-collector] DEBUG org.datadog.jmxfetch.reporter.Reporter - Instance dd-java-agent default is sending 26 metrics to the metrics reporter during collection #584
+[dd.trace 2020-07-16 11:06:06:012 -0700] [dd-jmx-collector] DEBUG org.datadog.jmxfetch.App - Trying to recover broken instances...
+[dd.trace 2020-07-16 11:06:06:012 -0700] [dd-jmx-collector] DEBUG org.datadog.jmxfetch.App - Done trying to recover broken instances.
+[dd.trace 2020-07-16 11:06:06:012 -0700] [dd-jmx-collector] DEBUG org.datadog.jmxfetch.App - Iteration ran in 1 ms
+[dd.trace 2020-07-16 11:06:06:012 -0700] [dd-jmx-collector] DEBUG org.datadog.jmxfetch.App - Sleeping for 15000 ms.
