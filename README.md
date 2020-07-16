@@ -3,8 +3,9 @@
 
 
 
-command to run with auto tracing:  `java -javaagent:./dd-java-agent.jar -Ddd.service.name=springtest0 -jar build/libs/springtest0-1.0.jar --server.port=9390
-`
+command to run with auto tracing:  
+java -javaagent:./dd-java-agent.jar -Ddd.service.name=springtest0 -jar build/libs/springtest0-1.0.jar --server.port=9390
+
 
 Run with auto and add global span tags: `java -javaagent:./dd-java-agent.jar -Ddd.service.name=springtest0 -Ddd.trace.global.tags=[food:grapes] -jar build/libs/springtest0-1.0.jar --server.port=9390`
 
@@ -26,7 +27,7 @@ for service D: java -javaagent:./dd-java-agent.jar -Ddd.service.name=springtest0
 
 
 To start just this service in debug mode writing logs to with_dd-trace-ot.log: 
-java -javaagent:./dd-java-agent.jar -Ddd.service.name=springtest0 -Ddd.trace.analytics.enabled=true -Ddd.jmxfetch.enabled=true -Ddd.trace.debug=true -Ddatadog.slf4j.simpleLogger.logFile=/Users/zach.groves/projects/my_sandboxes/java_apm_lab/lab1_auto/SpringTest0/logs/with_dd-trace-ot.log -jar build/libs/springtest0-1.0.jar --server.port=9390
+java -javaagent:./dd-java-agent.jar -Ddd.service.name=springtest0 -Ddd.trace.analytics.enabled=true -Ddd.jmxfetch.enabled=true -Ddd.trace.debug=true -Ddatadog.slf4j.simpleLogger.logFile=./debug_logs.log -jar build/libs/springtest0-1.0.jar --server.port=9395
 
 
 To start just this service in debug mode writing logs to NO_dd-trace-ot.log: 
