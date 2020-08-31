@@ -4,6 +4,8 @@
     <bytecodeTargetLevel>
       <module name="SpringTest0.main" target="1.8" />
       <module name="SpringTest0.test" target="1.8" />
+      <module name="SpringTest0Auto.main" target="1.8" />
+      <module name="SpringTest0Auto.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

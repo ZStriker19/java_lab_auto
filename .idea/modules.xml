@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SpringTest0.iml" filepath="$PROJECT_DIR$/SpringTest0.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SpringTest0.main.iml" filepath="$PROJECT_DIR$/.idea/modules/SpringTest0.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SpringTest0.test.iml" filepath="$PROJECT_DIR$/.idea/modules/SpringTest0.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SpringTest0Auto.iml" filepath="$PROJECT_DIR$/.idea/modules/SpringTest0Auto.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SpringTest0Auto.main.iml" filepath="$PROJECT_DIR$/.idea/modules/SpringTest0Auto.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SpringTest0Auto.test.iml" filepath="$PROJECT_DIR$/.idea/modules/SpringTest0Auto.test.iml" />
     </modules>
   </component>
 </project>

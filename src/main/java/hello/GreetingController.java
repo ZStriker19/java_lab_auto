@@ -1,11 +1,20 @@
 package hello;
 
 
-
-
-import datadog.trace.api.Trace;
+import datadog.trace.api.CorrelationIdentifier;
+import datadog.trace.api.DDTags;
 import io.opentracing.Scope;
 import io.opentracing.Span;
+import io.opentracing.Tracer;
+import io.opentracing.Span;
+import io.opentracing.util.GlobalTracer;
+
+import datadog.trace.api.Trace;
+import datadog.trace.api.interceptor.MutableSpan;
+
+import io.opentracing.tag.Tags;
+
+
 import io.opentracing.Tracer;
 import io.opentracing.util.GlobalTracer;
 import okhttp3.OkHttpClient;
@@ -71,6 +80,31 @@ public class GreetingController {
         //my map I'm creating for testing my own code:
         Map<String, String> map_test_z = new HashMap<>();
 
+        System.out.println(String.valueOf(CorrelationIdentifier.getTraceId()));
+        logger.info("In Service C ***************");
+
+        logger.debug("Hello world.");
+
+
+
+        MutableSpan span = ((MutableSpan) GlobalTracer.get().activeSpan());
+        MutableSpan localRootSpan = ((MutableSpan) span).getLocalRootSpan();
+        localRootSpan.getServiceName();
+        localRootSpan.setTag(DDTags.RESOURCE_NAME, "Maximo");
+        System.out.println("here's the status");
+        System.out.println(span.getTags().get("http.status"));
+        span.setTag("ok", "pickachu");
+//        String orderId = (String) span.getTags().get("http.status");
+        localRootSpan.setTag("http.status", (String) span.getTags().get("http.status"));
+        localRootSpan.setTag("da_heck", (String) span.getTags().get("ok"));
+        localRootSpan.setTag("this.one", "pull");
+
+        for (Map.Entry<String, Object> entry : span.getTags().entrySet())
+            System.out.println("Key = " + entry.getKey() +
+                    ", Value = " + entry.getValue());
+
+        doSomeStuff("ok");
+
         Randomizer rando = new Randomizer();
         rando.randomize();
 
@@ -87,7 +121,7 @@ public class GreetingController {
         // multiplyBy12((float) 23.3);
 
 
-        //  doSomeOtherStuff(doSomeStuff("\n how about this but really"));
+        doSomeOtherStuff(doSomeStuff("\n how about this but really"));
 
 
         //Post to downsteam service using OKhttp specifically
@@ -132,10 +166,11 @@ public class GreetingController {
 
     public void doSomeOtherStuff (String somestring) throws InterruptedException {
         Tracer tracer = GlobalTracer.get();
-        try (Scope scope = tracer.buildSpan("doSomeOtherStuff").startActive(true)) {
-            scope.span().setTag("Service", "doSomeOtherStuffService");
-            Thread.sleep(1000);
-        }
+//        try (Scope scope = tracer.buildSpan("doSomeOtherStuff").startActive(true)) {
+//            scope.span().setTag("Service", "doSomeOtherStuffService");
+//
+//            Thread.sleep(1000);
+//        }
         System.out.println(somestring);
         Thread.sleep(200L);
     }

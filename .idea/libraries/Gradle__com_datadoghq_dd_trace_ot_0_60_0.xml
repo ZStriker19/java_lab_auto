@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.datadoghq:dd-trace-ot:0.60.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.datadoghq/dd-trace-ot/0.60.0/ac30a029b4b65b52698ea1d3483b6f61b1c3edc1/dd-trace-ot-0.60.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.datadoghq/dd-trace-ot/0.60.0/d53032ec2c1d1454dcfd8ad7ab6a030458195c7/dd-trace-ot-0.60.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

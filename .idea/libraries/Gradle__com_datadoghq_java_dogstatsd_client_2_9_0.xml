@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.datadoghq:java-dogstatsd-client:2.9.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.datadoghq/java-dogstatsd-client/2.9.0/41c445311b6e4847327dd072605637e086c7c8c4/java-dogstatsd-client-2.9.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.datadoghq/java-dogstatsd-client/2.9.0/2e5dbf916d7af94c4fae647d8ae25d2fbd8249c8/java-dogstatsd-client-2.9.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
