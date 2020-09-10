@@ -4,7 +4,7 @@
 
 
 command to run with auto tracing:  
-java -javaagent:./dd-java-agent.jar -Ddd.service.name=springtest0 -jar build/libs/springtest0-1.0.jar --server.port=9390
+java -javaagent:./dd-java-agent.jar -Ddd.service.name=springtest0 -Ddd.logs.injection=true -jar build/libs/springtest0-1.0.jar --server.port=9390
 
 
 Run with auto and add global span tags: `java -javaagent:./dd-java-agent.jar -Ddd.service.name=springtest0 -Ddd.trace.global.tags=[food:grapes] -jar build/libs/springtest0-1.0.jar --server.port=9390`
@@ -19,8 +19,7 @@ curl localhost:9390/ServiceC
 
 Can also curl ServiceX to hit ServiceY on SpringTest1 `curl --header "name: zach" localhost:9390/ServiceX`
 
-Side note: I also installed the latest tracer version and deleted the on that came with the project
-Ω
+
 When adding open tracing had to manually set the datadog ot tracing version
 
 When using just the opentracer I ran the command: `java -Ddd.trace.analytics.enabled=true -jar build/libs/springtest0-1.0.jar --server.port=9390` should use port 9390 if connecting with separate application
@@ -33,7 +32,7 @@ When you run service C and service D separately, for service c: java -javaagent:
 for service D: java -javaagent:./dd-java-agent.jar -Ddd.service.name=springtest0 -jar build/libs/springtest0-1.0.jar --server.port=9393
 
 
-To start just this service in debug mode writing logs to with_dd-trace-ot.log: 
+Run with logs:
 java -javaagent:./dd-java-agent.jar -Ddd.service.name=springtest0 -Ddd.trace.analytics.enabled=true -Ddd.jmxfetch.enabled=true -Ddd.trace.debug=true -Ddatadog.slf4j.simpleLogger.logFile=./debug_logs.log -jar build/libs/springtest0-1.0.jar --server.port=9390
 
 

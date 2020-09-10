@@ -69,7 +69,7 @@ public class GreetingController {
     @Autowired
     HttpServletRequest request;
 
-    private static final Logger logger = LoggerFactory.getLogger(GreetingController.class);
+//    private static final Logger logger = LoggerFactory.getLogger(GreetingController.class);
 
     @Value("#{environment['sleeptime'] ?: '2000'}")
     private long sleepTime;
@@ -81,9 +81,10 @@ public class GreetingController {
         Map<String, String> map_test_z = new HashMap<>();
 
         System.out.println(String.valueOf(CorrelationIdentifier.getTraceId()));
-        logger.info("In Service C ***************");
+//        logger.info("In Service C ***************");
+//
+//        logger.debug("Hello world.");
 
-        logger.debug("Hello world.");
 
 
 
