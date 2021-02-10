@@ -49,3 +49,7 @@ java -javaagent:/Users/zach.groves/projects/java-apm/dd-trace-java/dd-java-agent
 /Users/zach.groves/projects/java-apm/dd-trace-java/dd-java-agent/build/libs/dd-java-agent-0.38.0-SNAPSHOT.jar
 
 DD_KAFKA_CLIENT_PROPAGATION_ENABLED
+
+
+java -javaagent:./dd-java-agent.jar -Ddd.service.name=springtest0 -Ddd.profiling.enabled=true -XX:FlightRecorderOptions=stackdepth=256 -Ddd.trace.analytics.enabled=true -Ddd.jmxfetch.enabled=true -Ddd.trace.debug=true -Ddatadog.slf4j.simpleLogger.logFile=./debug_logs.log -jar build/libs/springtest0-1.0.jar --server.port=9390
+

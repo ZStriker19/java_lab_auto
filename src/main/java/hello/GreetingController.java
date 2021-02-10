@@ -21,12 +21,14 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.aopalliance.intercept.Invocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.ServletRequestBindingException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -77,6 +79,7 @@ public class GreetingController {
 
     @RequestMapping("/ServiceC")
     public String serviceC(HttpServletRequest request) throws InterruptedException, IOException {
+        datadog.trace.api.GlobalTracer.get().addTraceInterceptor(new TaggingInterceptor());
         //my map I'm creating for testing my own code:
         Map<String, String> map_test_z = new HashMap<>();
 
@@ -108,6 +111,8 @@ public class GreetingController {
 
         Randomizer rando = new Randomizer();
         rando.randomize();
+
+        multiplyBy12((float) 3);
 
         Enumeration headerNames = request.getHeaderNames();
 
@@ -159,6 +164,7 @@ public class GreetingController {
 
     @Trace(operationName = "job.exec", resourceName = "MyJob.process")
     public String doSomeStuff (String somestring) throws InterruptedException {
+
         String helloStr = String.format("Hello, %s!", somestring);
         Thread.sleep(200L);
         return helloStr;
@@ -167,22 +173,28 @@ public class GreetingController {
 
     public void doSomeOtherStuff (String somestring) throws InterruptedException {
         Tracer tracer = GlobalTracer.get();
-//        try (Scope scope = tracer.buildSpan("doSomeOtherStuff").startActive(true)) {
-//            scope.span().setTag("Service", "doSomeOtherStuffService");
-//
-//            Thread.sleep(1000);
-//        }
+        final Span span = GlobalTracer.get().activeSpan();
+        span.setTag(Tags.ERROR, true);
+        span.setTag(Tags.HTTP_STATUS, 500);
         System.out.println(somestring);
         Thread.sleep(200L);
     }
 
-    @Trace(operationName = "multiply.twelve", resourceName = "ToTry.process")
+//    @Trace(operationName = "multiply.twelve", resourceName = "numbers")
+    @ExceptionHandler(ServletRequestBindingException.class)
+    @Trace
     private float multiplyBy12 (Float num) throws InterruptedException {
         num = num * 12;
         System.out.print("here's the number:");
         System.out.print(num);
         Thread.sleep(250L);
-        return num;
+        final Span span = GlobalTracer.get().activeSpan();
+         if (span != null) {
+            span.setTag("error.code", 430);
+            span.setTag("error.message.temp", "this an error now");
+            }
+
+            return num;
     }
 
 

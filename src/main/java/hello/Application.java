@@ -18,8 +18,9 @@ public class Application {
     }
 
     public static void main(String[] args) {
-
+        datadog.trace.api.GlobalTracer.get().addTraceInterceptor(new TaggingInterceptor());
 
         SpringApplication.run(Application.class, args);
+
     }
 }

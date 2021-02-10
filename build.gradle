@@ -41,11 +41,11 @@ dependencies {
     compile group: 'io.opentracing', name: 'opentracing-util', version: "0.33.0"
     compile group: 'com.datadoghq', name: 'dd-trace-ot', version: "0.60.0"
 
-    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '0.9.26'
-    compile group: 'ch.qos.logback.contrib', name: 'logback-jackson', version: '0.1.2'
-    compile group: 'ch.qos.logback.contrib', name: 'logback-json-classic', version: '0.1.2'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.11.2'
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+//    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '0.9.26'
+//    compile group: 'ch.qos.logback.contrib', name: 'logback-jackson', version: '0.1.2'
+//    compile group: 'ch.qos.logback.contrib', name: 'logback-json-classic', version: '0.1.2'
+//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.11.2'
+//    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
 
 
 // dd version: https://docs.datadoghq.com/logs/log_collection/java/?tab=slf4j
